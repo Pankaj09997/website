@@ -141,6 +141,13 @@
       font-weight: 700;
       margin-bottom: 0.5rem;
     }
+    .project-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;         /* Prevent spacing issues */
+  margin: 0;              /* Ensure no extra space */
+  padding: 0;
+}
     .project-desc {
       color: var(--muted);
       font-size: 1rem;
@@ -211,7 +218,7 @@
       <div class="section-title">Projects</div>
       <div class="projects-grid">
         <div class="project-box">
-<a href="https://github.com/Pankaj09997/Todo" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+<a href="https://github.com/Pankaj09997/Todo" target="_blank" class="project-link"rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
           <div class="project-title">Todolist Clone</div>
           <div class="project-desc">A full-featured ToDo app built in Flutter, supports reminders, cloud sync, and material design.</div>
           <div class="project-tags">
