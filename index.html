@@ -3,201 +3,523 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pankaj Pandey | Flutter Developer </title>
+  <title>Pankaj Pandey | Flutter Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --main-bg: #0a192f;
       --box-bg: #112240;
       --primary: #64ffda;
+      --primary-dark: #52d4b6;
       --text: #ccd6f6;
+      --text-light: #e6f1ff;
       --muted: #8892b0;
-      --radius: 15px;
+      --muted-dark: #495670;
+      --radius: 8px;
+      --transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
     }
+    
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
+    
     body {
       background: var(--main-bg);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
     }
+    
+    /* Typography */
+    h1, h2, h3 {
+      line-height: 1.1;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+    
+    a {
+      text-decoration: none;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+    
+    a:hover {
+      color: var(--primary-dark);
+    }
+    
+    /* Navigation */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: var(--box-bg);
+      padding: 1.5rem 2rem;
+      background: rgba(10, 25, 47, 0.85);
+      backdrop-filter: blur(10px);
       position: sticky;
-      top: 0; z-index: 100;
+      top: 0;
+      z-index: 100;
+      height: 80px;
     }
+    
     .logo {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: var(--primary);
-      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+    
+    .logo::before {
+      content: ">";
+      color: var(--primary);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
     .nav-links a {
       color: var(--muted);
-      text-decoration: none;
-      margin-left: 2rem;
+      font-size: 0.9rem;
       font-weight: 500;
-      transition: color 0.2s;
+      padding: 0.5rem;
+      position: relative;
     }
+    
+    .nav-links a::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+    
     .nav-links a:hover {
       color: var(--primary);
     }
+    
+    .nav-links a:hover::before {
+      width: 100%;
+    }
+    
+    .nav-links a.active {
+      color: var(--primary);
+    }
+    
+    .nav-links a.active::before {
+      width: 100%;
+    }
+    
     #mobile-menu {
-      display:none;
-      flex-direction:column;
-      cursor:pointer;
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 101;
     }
+    
     #mobile-menu span {
-      width: 28px; height: 3px;
+      width: 28px;
+      height: 2px;
       background: var(--primary);
-      margin: 5px 0;
-      transition: all 0.3s;
+      margin: 4px 0;
+      transition: var(--transition);
     }
+    
+    #mobile-menu.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    
+    #mobile-menu.open span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    #mobile-menu.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+    
     @media (max-width: 768px) {
       .nav-links {
         display: none;
         flex-direction: column;
         background: var(--box-bg);
-        position: absolute;
-        right: 2rem; top: 68px;
-        width: 160px;
-        border-radius: var(--radius);
-        box-shadow: 0 8px 20px #0008;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(75vw, 300px);
+        padding: 6rem 2rem;
+        box-shadow: -10px 0 30px -15px rgba(2,12,27,0.7);
+        transform: translateX(100%);
+        transition: var(--transition);
       }
+      
       .nav-links.open {
         display: flex;
+        transform: translateX(0);
       }
+      
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 1rem 0;
+      }
+      
       #mobile-menu {
         display: flex;
       }
     }
-
+    
+    /* Container */
     .container {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 0 1.5rem;
     }
+    
+    /* Hero Section */
     .hero {
-      text-align: center;
-      margin: 3rem 0 2rem;
-      animation: fadeInHero 0.7s;
-    }
-    @keyframes fadeInHero {
-      from { opacity: 0; transform: translateY(30px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      color: var(--primary);
-      margin-bottom: .8rem;
-    }
-    .hero p {
-      max-width: 700px;
+      padding: 8rem 0 4rem;
+      max-width: 900px;
       margin: 0 auto;
-      color: var(--muted);
-      font-size: 1.1rem;
     }
-
-    .section-title {
-      font-size: 2rem;
+    
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero h1 span {
       color: var(--primary);
-      margin-bottom: 1.2rem;
-      border-left: 4px solid var(--primary);
-      padding-left: .6rem;
-      margin-top: 2.5rem;
+      display: block;
     }
+    
+    .hero p {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      margin-bottom: 2rem;
+    }
+    
+    .hero-cta {
+      display: inline-block;
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1rem 1.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1rem;
+    }
+    
+    .hero-cta:hover {
+      background: rgba(100, 255, 218, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    /* Sections */
+    section {
+      padding: 6rem 0;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin: 0 0 2.5rem;
+      width: 100%;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+    
+    .section-title::before {
+      content: "02.";
+      margin-right: 0.5rem;
+      color: var(--primary);
+      font-family: 'SF Mono', monospace;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    
+    .section-title::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: var(--muted-dark);
+      position: relative;
+      margin-left: 1rem;
+    }
+    
     /* Projects grid */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-      gap: 1.6rem;
-      margin-bottom: 2.5rem;
-      margin-top: .3rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      position: relative;
     }
+    
     .project-box {
       background: var(--box-bg);
       border-radius: var(--radius);
-      box-shadow: 0 4px 16px #0005;
-      padding: 1.3rem 1rem 1.2rem;
-      transition: transform 0.15s, box-shadow 0.15s;
-      border: 1.5px solid transparent;
+      padding: 2rem 1.75rem;
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+      height: 100%;
     }
+    
+    .project-box::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--muted-dark);
+      z-index: -1;
+      transition: var(--transition);
+    }
+    
     .project-box:hover {
-      transform: translateY(-6px) scale(1.03);
+      transform: translateY(-7px);
+    }
+    
+    .project-box:hover::before {
       border-color: var(--primary);
-      box-shadow: 0 6px 25px #0007;
+      box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
     }
-    .project-title {
+    
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .project-links a {
+      color: var(--muted);
+      transition: var(--transition);
+    }
+    
+    .project-links a:hover {
       color: var(--primary);
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+      transform: translateY(-2px);
     }
-    .project-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;         /* Prevent spacing issues */
-  margin: 0;              /* Ensure no extra space */
-  padding: 0;
-}
+    
+    .project-title {
+      color: var(--text-light);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
     .project-desc {
       color: var(--muted);
-      font-size: 1rem;
-      margin-bottom: 0.7rem;
-      min-height: 48px;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
     }
+    
     .project-tags {
-      margin-top: .4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.75rem;
     }
+    
     .project-tag {
-      display: inline-block;
-      background: #233554;
-      color: var(--primary);
-      font-size: 0.88em;
-      border-radius: 8px;
-      padding: 2px 9px;
-      margin-right: 7px;
-      margin-bottom: 3px;
+      color: var(--muted);
     }
-    .about-box, .contact-box {
-      background: var(--box-bg);
+    
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .about-text {
+      color: var(--muted);
+    }
+    
+    .about-text p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(140px, 200px));
+      gap: 0 1rem;
+      padding: 0;
+      margin: 1.5rem 0 0;
+      overflow: hidden;
+      list-style: none;
+    }
+    
+    .skills-list li {
+      position: relative;
+      margin-bottom: 0.75rem;
+      padding-left: 1.25rem;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    
+    .skills-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+    
+    .about-image {
+      position: relative;
+      max-width: 300px;
+    }
+    
+    .about-image::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--primary);
       border-radius: var(--radius);
-      box-shadow: 0 4px 18px #0004;
-      padding: 1.5rem 1rem;
-      margin-bottom: 1.6rem;
+      top: 20px;
+      left: 20px;
+      z-index: -1;
+      transition: var(--transition);
+    }
+    
+    .about-image:hover::before {
+      top: 15px;
+      left: 15px;
+    }
+    
+    .about-image img {
+      border-radius: var(--radius);
+      filter: grayscale(100%) contrast(1);
+      transition: var(--transition);
+    }
+    
+    .about-image:hover img {
+      filter: none;
+    }
+    
+    /* Contact Section */
+    .contact-box {
+      text-align: center;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      color: var(--muted)
+      margin: 0 auto;
     }
-    .about-box strong {
+    
+    .contact-box p {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .contact-links a {
+      color: var(--muted);
+      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+    
+    .contact-links a:hover {
       color: var(--primary);
+      transform: translateY(-3px);
     }
-    .contact-box a {
-      color: var(--primary);
-      word-break: break-all;
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--muted);
+      font-size: 0.85rem;
     }
-    /* Responsive tweaks */
-    @media (max-width: 450px) {
-      .hero h1 { font-size:1.7rem;}
-      .section-title { font-size: 1.25rem;}
-      .about-box, .contact-box {padding: 1.1rem 0.7rem;}
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-image {
+        margin: 0 auto;
+      }
+      
+      section {
+        padding: 4rem 0;
+      }
     }
+    
+    @media (max-width: 480px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+      
+      .hero {
+        padding: 6rem 0 3rem;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .skills-list {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.6s forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
   </style>
 </head>
 <body>
   <nav>
     <span class="logo">Pankaj Pandey</span>
     <div class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
+      <a href="#home" class="active">Home</a>
       <a href="#projects">Projects</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
@@ -206,96 +528,230 @@
       <span></span><span></span><span></span>
     </div>
   </nav>
+  
   <div class="container">
-    <section id="home" class="hero">
-      <h1>Flutter Developer | IT Engineer | Aspriring ML & AI Enthusiast</h1>
+    <section id="home" class="hero fade-in">
+      <h1>
+        <span>Hi, I'm Pankaj Pandey</span>
+        Flutter Developer & IT Engineer
+      </h1>
       <p>
-        Hi! I'm <strong>Pankaj Pandey</strong>, a passionate Flutter developer who crafts beautiful, high-performance cross-platform apps.
-        With years of experience building scalable mobile solutions, I’m excited to share some of my work!
+        I specialize in building beautiful, high-performance cross-platform applications with Flutter. 
+        With a passion for clean code and intuitive user experiences, I create digital solutions that make an impact.
       </p>
+      <a href="#projects" class="hero-cta fade-in delay-1">View My Work</a>
     </section>
+    
     <section id="projects">
-      <div class="section-title">Projects</div>
+      <h2 class="section-title">Projects</h2>
       <div class="projects-grid">
-        
-<a href="https://github.com/Pankaj09997/Todo" target="_blank" class="project-link" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-<div class="project-box">
-          <div class="project-title">Todolist Clone</div>
-          <div class="project-desc">A full-featured ToDo app built in Flutter, supports reminders, cloud sync, and material design.</div>
+        <div class="project-box fade-in delay-1">
+          <div class="project-header">
+            <h3 class="project-title">Todolist Clone</h3>
+            <div class="project-links">
+              <a href="https://github.com/Pankaj09997/Todo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="project-desc">
+            A full-featured ToDo app built in Flutter with Firebase backend, supporting reminders, cloud sync, and material design.
+          </div>
           <div class="project-tags">
             <span class="project-tag">Flutter</span>
             <span class="project-tag">Firebase</span>
+            <span class="project-tag">Dart</span>
           </div>
         </div>
-      </a>
-<a href="https://github.com/Pankaj09997/ecommerce" target="_blank" class="project-link" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-        <div class="project-box">
-          <div class="project-title">Ecommerce app</div>
-          <div class="project-desc">A simple ecommerce app with sleek UI, real-time API data, and beautiful animations.</div>
+        
+        <div class="project-box fade-in delay-2">
+          <div class="project-header">
+            <h3 class="project-title">Ecommerce App</h3>
+            <div class="project-links">
+              <a href="https://github.com/Pankaj09997/ecommerce" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="project-desc">
+            A sleek e-commerce application with real-time API data, beautiful animations, and intuitive product browsing.
+          </div>
           <div class="project-tags">
             <span class="project-tag">Flutter</span>
             <span class="project-tag">REST API</span>
+            <span class="project-tag">UI/UX</span>
           </div>
         </div>
-</a>
-        <a href="https://github.com/Pankaj09997/Expense-Tracker" target="_blank" class="project-link" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-        <div class="project-box">
-          <div class="project-title">ExpenseTracker</div>
-          <div class="project-desc">Expense tracking application with charts, savings, and notification reminders.</div>
+        
+        <div class="project-box fade-in delay-3">
+          <div class="project-header">
+            <h3 class="project-title">ExpenseTracker</h3>
+            <div class="project-links">
+              <a href="https://github.com/Pankaj09997/Expense-Tracker" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="project-desc">
+            Comprehensive expense tracking application with interactive charts, savings goals, and notification reminders.
+          </div>
           <div class="project-tags">
             <span class="project-tag">Dart</span>
             <span class="project-tag">SQLite</span>
+            <span class="project-tag">Data Visualization</span>
           </div>
         </div>
-        <a href="https://github.com/Pankaj09997/Agro-Tech-Hub" target="_blank" class="project-link" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-        <div class="project-box">
-          <div class="project-title">AgroTech Hub</div>
-          <div class="project-desc">An app for food beloved farmers, with media upload, comments, and crop recommendation.</div>
+        
+        <div class="project-box fade-in delay-4">
+          <div class="project-header">
+            <h3 class="project-title">AgroTech Hub</h3>
+            <div class="project-links">
+              <a href="https://github.com/Pankaj09997/Agro-Tech-Hub" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="project-desc">
+            Agricultural technology platform for farmers featuring media upload, community features, and ML-powered crop recommendations.
+          </div>
           <div class="project-tags">
             <span class="project-tag">Flutter</span>
             <span class="project-tag">Firebase</span>
-            <span class="project-tag">ML</span>
-          </div>
-        </div>
-        </a>
-          <div class="project-box">
-          <div class="project-title">Bike Rental </div>
-          <div class="project-desc">An app for bike and scooter riders, with media upload, comments, and payment navigation.</div>
-          <div class="project-tags">
-            <span class="project-tag">Flutter</span>
-            <span class="project-tag">Firebase</span>
-            <span class="project-tag">ML</span>
+            <span class="project-tag">Machine Learning</span>
           </div>
         </div>
       </div>
     </section>
+    
     <section id="about">
-      <div class="section-title">About</div>
-      <div class="about-box">
-        <strong>Experienced in building complex mobile apps</strong> using Flutter, Firebase, and REST APIs.<br><br>
-        My passion is creating fast, maintainable code and polished UIs. I enjoy collaborating with teams and contributing to open source.
-        <br><br>
-        <strong>Skills:</strong> Flutter, Dart, Firebase, REST API, UI/UX, Animations, Git, Agile
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text fade-in">
+          <p>
+            Hello! I'm Pankaj, a Flutter developer based in India with a passion for building exceptional mobile applications. 
+            My journey in app development began in college when I discovered my love for creating digital experiences.
+          </p>
+          <p>
+            I specialize in Flutter development, creating cross-platform applications that are not only beautiful but also 
+            performant and user-friendly. My approach combines technical expertise with an eye for design.
+          </p>
+          <p>
+            Here are a few technologies I've been working with recently:
+          </p>
+          <ul class="skills-list">
+            <li>Flutter & Dart</li>
+            <li>Firebase</li>
+            <li>REST APIs</li>
+            <li>State Management</li>
+            <li>UI/UX Design</li>
+            <li>Git & GitHub</li>
+          </ul>
+        </div>
+        <div class="about-image fade-in delay-1">
+          <!-- Replace with your actual image -->
+          <div style="width: 100%; height: 300px; background: var(--muted-dark); border-radius: var(--radius);"></div>
+        </div>
       </div>
     </section>
+    
     <section id="contact">
-      <div class="section-title">Contact</div>
-      <div class="contact-box">
-        Email: <a href="mailto:pankaj.pandey@example.com" target="_blank" rel="noopener noreferrer">pankaj.pandey@example.com</a><br>
-        LinkedIn: <a href="https://www.linkedin.com/in/pankaj-pandey-87b157255/" target="_blank" rel="noopener noreferrer" >linkedin.com/in/pankajpandey</a><br>
-        GitHub: <a href="https://github.com/Pankaj09997" target="_blank" rel="noopener noreferrer"> Pankaj09997 </a>
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-box fade-in">
+        <p>
+          I'm currently looking for new opportunities and my inbox is always open. 
+          Whether you have a question or just want to say hi, I'll do my best to get back to you!
+        </p>
+        <a href="mailto:pankaj.pandey@example.com" class="hero-cta">Say Hello</a>
+        <div class="contact-links">
+          <a href="https://github.com/Pankaj09997" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/pankaj-pandey-87b157255/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+          <a href="mailto:pankaj.pandey@example.com" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   </div>
+  
+  <footer class="fade-in delay-1">
+    <div class="container">
+      <p>Designed & Built by Pankaj Pandey</p>
+    </div>
+  </footer>
+  
   <script>
     function toggleMobileMenu() {
       const navLinks = document.getElementById('navLinks');
+      const mobileMenu = document.getElementById('mobile-menu');
       navLinks.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
     }
+    
     // Close mobile menu on link click
-    document.querySelectorAll('.nav-links a').forEach(link=>{
-      link.addEventListener('click', ()=> {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
         document.getElementById('navLinks').classList.remove('open');
+        document.getElementById('mobile-menu').classList.remove('open');
+      });
+    });
+    
+    // Highlight active nav link on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (pageYOffset >= sectionTop - 300) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+          link.classList.add('active');
+        }
+      });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
       });
     });
   </script>
